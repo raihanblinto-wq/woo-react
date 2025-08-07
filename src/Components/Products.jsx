@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getAllProducts } from "../Api";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { CartContext } from "../context/CartContext";
 
@@ -8,9 +8,11 @@ const ProductsSection = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useContext(CartContext);
+  const { setCartPopUp } = useOutletContext();
 
   const handleAddToCart = (product) => {
     addToCart({ ...product, quantity: 1 });
+    setCartPopUp(true);
   };
 
   useEffect(() => {

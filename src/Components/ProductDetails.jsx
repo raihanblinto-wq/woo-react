@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import { getSingleProductData } from "../Api";
-import SkeletonCard from "./SkeletonCard";
+
 import { ClipLoader } from "react-spinners";
 import { CartContext } from "../context/CartContext";
 
@@ -101,8 +101,13 @@ const ProductDetails = () => {
           </button>
           <button
             onClick={() => {
-              handleAddToCart();
-              navigate("/checkout");
+              const token = localStorage.getItem("token");
+              if (!token) {
+                navigate("/login");
+              } else {
+                handleAddToCart();
+                navigate("/checkout");
+              }
             }}
             className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition-colors ease-in cursor-pointer"
           >
